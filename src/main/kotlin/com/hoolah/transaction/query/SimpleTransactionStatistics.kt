@@ -2,6 +2,7 @@ package com.hoolah.transaction.query
 
 import com.hoolah.transaction.model.Transaction
 import java.math.BigDecimal
+import java.math.RoundingMode
 
 /**
  * Return average transaction value and transaction count
@@ -21,5 +22,6 @@ class SimpleTransactionStatistics : TransactionStatistics {
 
 		number = results.size
 		average = BigDecimal.valueOf(total / results.size)
+		average = average.setScale(2, RoundingMode.HALF_EVEN)
 	}
 }
