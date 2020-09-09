@@ -21,7 +21,7 @@ class SimpleMerchantQuery(private val fromDate: LocalDateTime, private val toDat
 	val results = mutableListOf<Transaction>()
 
 	override fun match(tx: Transaction) {
-		if (tx.date.isAfter(fromDate) && tx.date.isBefore(toDate) && tx.merchant == cleanString(merchant) && tx.type != TransactionType.reversal)
+		if (tx.date.isAfter(fromDate) && tx.date.isBefore(toDate) && tx.merchant == cleanString(merchant))
 			results.add(tx)
 	}
 
