@@ -27,7 +27,7 @@ class TransactionTest {
 	@Test
 	fun shouldLoadWithNoRelatedTransaction() {
 		//given
-		val data = arrayOf("tx1", "20/08/2018 13:14:11", "10.95", "Acme", "REVERSAL")
+		val data = arrayOf("tx1", "20/08/2018 13:14:11", "10.95", "Acme", "PAYMENT")
 
 		// when
 		val tx = Transaction(data)
@@ -37,7 +37,7 @@ class TransactionTest {
 		assertThat(tx.date).isEqualTo(LocalDateTime.of(2018, 8, 20, 13, 14, 11))
 		assertThat(tx.amount).isEqualTo(BigDecimal.valueOf(10.95))
 		assertThat(tx.merchant).isEqualTo("acme")
-		assertThat(tx.type).isEqualTo(TransactionType.reversal)
+		assertThat(tx.type).isEqualTo(TransactionType.payment)
 		assertThat(tx.relatedTransactionId).isNull()
 	}
 }

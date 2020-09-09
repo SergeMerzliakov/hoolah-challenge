@@ -34,14 +34,20 @@ class SimpleMerchantQueryTest {
 
 	@Test
 	fun shouldMatchWithReversalInsideQueryRange() {
+		// given
 		val acme1b = Transaction(arrayOf("1000", "01/01/2018 13:15:00", "10.00", "Acme", "REVERSAL", "1"))
 		val db = createTestDatabase(acme1, acme1b, acme2, acme3)
 		val start = LocalDateTime.of(2018, 1, 1, 12, 55, 0)
 		val finish = start.plusHours(2L)
+
+		// when
 		val query = SimpleMerchantQuery(start, finish, "acme")
 		db.query(query)
+
 		val stats = SimpleTransactionStatistics()
 		query.generateStatistics(stats)
+
+		// then
 		assertThat(stats.number).isEqualTo(1)
 		assertThat(stats.average).isCloseTo(BigDecimal.valueOf(20.0), Percentage.withPercentage(0.01))
 	}
@@ -49,27 +55,38 @@ class SimpleMerchantQueryTest {
 
 	@Test
 	fun shouldMatchWithNoReversals() {
+		// given
 		val db = createTestDatabase(acme1, acme2, acme3)
 		val start = LocalDateTime.of(2018, 1, 1, 12, 55, 0)
 		val finish = start.plusHours(2L)
+
+		// when
 		val query = SimpleMerchantQuery(start, finish, "acme")
 		db.query(query)
+
 		val stats = SimpleTransactionStatistics()
 		query.generateStatistics(stats)
+
+		// then
 		assertThat(stats.number).isEqualTo(2)
 		assertThat(stats.average).isCloseTo(BigDecimal.valueOf(15.0), Percentage.withPercentage(0.01))
 	}
 
 	@Test
 	fun shouldNotMatchUnknownMerchant() {
+		// given
 		val db = createTestDatabase(acme1, acme2)
-
 		val start = LocalDateTime.of(2018, 1, 1, 12, 55, 0)
 		val finish = start.plusHours(1L)
+
+		// when
 		val query = SimpleMerchantQuery(start, finish, "unknown")
 		db.query(query)
+
 		val stats = SimpleTransactionStatistics()
 		query.generateStatistics(stats)
+
+		//then
 		assertThat(stats.number).isEqualTo(0)
 		assertThat(stats.average).isEqualTo(BigDecimal.ZERO)
 	}
@@ -77,14 +94,19 @@ class SimpleMerchantQueryTest {
 
 	@Test
 	fun shouldNotMatchEmptyDatabase() {
+		// given
 		val db = createTestDatabase()
-
 		val start = LocalDateTime.of(2018, 1, 1, 12, 55, 0)
 		val finish = start.plusHours(1L)
+
+		// when
 		val query = SimpleMerchantQuery(start, finish, "doesNotMatter")
 		db.query(query)
+
 		val stats = SimpleTransactionStatistics()
 		query.generateStatistics(stats)
+
+		// then
 		assertThat(stats.number).isEqualTo(0)
 		assertThat(stats.average).isEqualTo(BigDecimal.ZERO)
 	}
@@ -114,13 +136,19 @@ class SimpleMerchantQueryTest {
 	   Perform basic matching test which returns non-zero statistics
 	 */
 	private fun shouldMatchWithReversalOutsideQueryRange(merchant: String) {
+		// given
 		val db = createTestDatabase(acme1, acme2, acme3, acme4)
 		val start = LocalDateTime.of(2018, 1, 1, 12, 55, 0)
 		val finish = start.plusHours(2L)
+
+		// when
 		val query = SimpleMerchantQuery(start, finish, merchant)
 		db.query(query)
+
 		val stats = SimpleTransactionStatistics()
 		query.generateStatistics(stats)
+
+		// then
 		assertThat(stats.number).isEqualTo(1)
 		assertThat(stats.average).isCloseTo(BigDecimal.valueOf(20.0), Percentage.withPercentage(0.01))
 	}
