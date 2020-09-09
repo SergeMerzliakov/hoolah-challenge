@@ -8,37 +8,49 @@ import com.hoolah.transaction.query.SimpleTransactionStatistics
 import java.io.File
 
 
-/**
- * Command line runner
- *
- * Not productionized
- */
-fun main(args: Array<String>) {
 
-	if (args.size != 4) {
-		println("Invalid arguments. Arguments are:")
-		println("\t 1) Merchant name. Case is not important")
-		println("\t 2) from date in format: DD/MM/YYYY hh:mm:ss")
-		println("\t 3) to date in format: DD/MM/YYYY hh:mm:ss")
-		println("\t 4) file path of csv file")
-		return
+class RunApplication(){
+
+	/**
+	 * Entry Point
+	 */
+	companion object {
+
+		@JvmStatic
+		fun main(args: Array<String>) {
+			val app = RunApplication()
+			app.run(args)
+		}
 	}
 
-	val merchant = cleanString(args[0])
-	val fromDate = cleanDate(args[1])
-	val toDate = cleanDate(args[2])
-	val file = File(args[3])
+	fun run(args: Array<String>) {
 
-	val loader = TransactionLoader()
-	val db = loader.load(file)
+		if (args.size != 4) {
+			println("Invalid arguments. Arguments are:")
+			println("\t 1) Merchant name. Case is not important")
+			println("\t 2) from date in format: DD/MM/YYYY hh:mm:ss")
+			println("\t 3) to date in format: DD/MM/YYYY hh:mm:ss")
+			println("\t 4) file path of csv file")
+			return
+		}
 
-	val query = SimpleMerchantQuery(fromDate, toDate, merchant)
-	db.query(query)
+		val merchant = cleanString(args[0])
+		val fromDate = cleanDate(args[1])
+		val toDate = cleanDate(args[2])
+		val file = File(args[3])
 
-	val stats = SimpleTransactionStatistics()
-	query.generateStatistics(stats)
+		val loader = TransactionLoader()
+		val db = loader.load(file)
 
-	println("\nStatistics:")
-	println("\tNumber of Transactions: ${stats.number}")
-	println("\tAverage Transaction Value: ${stats.average}")
+		val query = SimpleMerchantQuery(fromDate, toDate, merchant)
+		db.query(query)
+
+		val stats = SimpleTransactionStatistics()
+		query.generateStatistics(stats)
+
+		println("\nStatistics:")
+		println("\tNumber of Transactions: ${stats.number}")
+		println("\tAverage Transaction Value: ${stats.average}")
+	}
 }
+
