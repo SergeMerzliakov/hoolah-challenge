@@ -18,29 +18,30 @@ delimiters
 
 ### A Sample File
 
-`ID, Date, Amount, Merchant, Type, Related Transaction
- WLMFRDGD, 20/08/2018 12:45:33, 59.99, Kwik-E-Mart, PAYMENT,
- YGXKOEIA, 20/08/2018 12:46:17, 10.95, Kwik-E-Mart, PAYMENT,
- LFVCTEYM, 20/08/2018 12:50:02, 5.00, MacLaren, PAYMENT,
- SUOVOISP, 20/08/2018 13:12:22, 5.00, Kwik-E-Mart, PAYMENT,
- AKNBVHMN, 20/08/2018 13:14:11, 10.95, Kwik-E-Mart, REVERSAL, YGXKOEIA
- JYAPKZFZ, 20/08/2018 14:07:10, 99.50, MacLaren, PAYMENT,` 
+    ID, Date, Amount, Merchant, Type, Related Transaction
+    WLMFRDGD, 20/08/2018 12:45:33, 59.99, Kwik-E-Mart, PAYMENT,
+    YGXKOEIA, 20/08/2018 12:46:17, 10.95, Kwik-E-Mart, PAYMENT,
+    LFVCTEYM, 20/08/2018 12:50:02, 5.00, MacLaren, PAYMENT,
+    SUOVOISP, 20/08/2018 13:12:22, 5.00, Kwik-E-Mart, PAYMENT,
+    AKNBVHMN, 20/08/2018 13:14:11, 10.95, Kwik-E-Mart, REVERSAL, YGXKOEIA
+    JYAPKZFZ, 20/08/2018 14:07:10, 99.50, MacLaren, PAYMENT,` 
 
 
 ## Setup
 
-The project requires:
-    * Java 8+ JDK
+The project requires only the following:
+
+        1. Java 8+ JDK
     
-gradle is run via the wrapper which is part of the repo
+gradle is run via the wrapper which is part of the repo and will import all other dependencies
 
 ## Running
 
 The simplest way is with the "gradle run" command with the following arguments:
 
 * merchant name
-* start date in DD/MM/YYYY hh:mm:ss format
-* end date in DD/MM/YYYY hh:mm:ss
+* start date in "DD/MM/YYYY hh:mm:ss" format
+* end date in "DD/MM/YYYY hh:mm:ss" format
 * full file path of the CSV transaction file
 
 
@@ -62,5 +63,6 @@ Run tests with:
 
 
 ### Limitations
+* Only tested in OSX environments
 * The coverage of unit tests is not exhaustive, but illustrates how a full suite of tests would look like
 * Simplistic transaction database not suitable for large numbers of transactions
