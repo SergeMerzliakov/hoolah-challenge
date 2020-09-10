@@ -66,3 +66,4 @@ Run tests with:
 * Only tested in OSX environments
 * The coverage of unit tests is not exhaustive, but illustrates how a full suite of tests would look like
 * Simplistic transaction database not suitable for large numbers of transactions
+* Minimal logging
